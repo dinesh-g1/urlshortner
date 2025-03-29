@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: 'postgres:17'
+    environment:
+      - POSTGRES_DB=url_db
+      - POSTGRES_PASSWORD=RandomPassword@839
+      - POSTGRES_USER=urlshortneradmin
+    ports:
+      - 5432:5432
