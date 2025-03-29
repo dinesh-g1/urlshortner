@@ -34,8 +34,13 @@ public class ShortUrl {
     @Column(name="created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+<<<<<<< HEAD
     @Column(name="expired_at")
     private LocalDateTime expiredAt;
+=======
+    @Column(name="expires_at")
+    private LocalDateTime expiresAt;
+>>>>>>> 192f168 (feat: populating the db tables)
 
     @Column(name="click_count")
     private Long clickCount;
@@ -76,11 +81,19 @@ public class ShortUrl {
     public void setIsPrivate(Boolean isPrivate) {
         this.isPrivate = isPrivate;
     }
+<<<<<<< HEAD
     public LocalDateTime getExpiredAt() {
         return expiredAt;
     }
     public void setExpiredAt(LocalDateTime expiredAt) {
         this.expiredAt = expiredAt;
+=======
+    public LocalDateTime getExpiresAt() {
+        return expiresAt;
+    }
+    public void setExpiresAt(LocalDateTime expiredAt) {
+        this.expiresAt = expiredAt;
+>>>>>>> 192f168 (feat: populating the db tables)
     }
     public Long getClickCount() {
         return clickCount;
