@@ -1,0 +1,3 @@
+-- INSERT INTO users (email, password, name, role)
+-- VALUES ("shekarreddy", "shekar@gmail.com", "shekarrama", "ROLE_ADMIN"),
+-- ("janakireddy", "janaki@gmail.com", "janakisita", "ROLE_ADMIN");
