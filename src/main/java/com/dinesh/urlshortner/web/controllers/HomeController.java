@@ -1,4 +1,4 @@
-package com.dinesh.urlshortner.controllers;
+package com.dinesh.urlshortner.web.controllers;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.dinesh.urlshortner.domain.entities.ShortUrl;
-import com.dinesh.urlshortner.services.ShortUrlService;
+import com.dinesh.urlshortner.domain.services.ShortUrlService;
 
 
 

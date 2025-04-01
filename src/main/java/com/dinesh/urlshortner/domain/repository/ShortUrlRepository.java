@@ -1,4 +1,4 @@
-package com.dinesh.urlshortner.repository;
+package com.dinesh.urlshortner.domain.repository;
 
 import java.util.List;
 
