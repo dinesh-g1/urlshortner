@@ -2,8 +2,8 @@ package com.dinesh.urlshortner.domain.services;
 
 import java.util.List;
 
-import com.dinesh.urlshortner.domain.entities.ShortUrl;
+import com.dinesh.urlshortner.domain.models.ShortUrlDto;
 
 public interface ShortUrlService {
-    List<ShortUrl> findPublicUrls();
+    List<ShortUrlDto> findPublicUrls();
 }

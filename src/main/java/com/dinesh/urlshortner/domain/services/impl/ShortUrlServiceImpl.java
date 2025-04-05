@@ -1,10 +1,12 @@
 package com.dinesh.urlshortner.domain.services.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.dinesh.urlshortner.domain.models.ShortUrlDto;
+import com.dinesh.urlshortner.domain.services.EntityManager;
 import org.springframework.stereotype.Service;
 
-import com.dinesh.urlshortner.domain.entities.ShortUrl;
 import com.dinesh.urlshortner.domain.repository.ShortUrlRepository;
 import com.dinesh.urlshortner.domain.services.ShortUrlService;
 
@@ -19,8 +21,9 @@ public class ShortUrlServiceImpl implements ShortUrlService {
 
 
     @Override
-    public List<ShortUrl> findPublicUrls() {
-        return shortUrlRepository.findPublicUrls();
+    public List<ShortUrlDto> findPublicUrls() {
+        return shortUrlRepository.findPublicUrls()
+                .stream().map(EntityManager::toShortUrlDto).collect(Collectors.toList());
     }
     
 }
