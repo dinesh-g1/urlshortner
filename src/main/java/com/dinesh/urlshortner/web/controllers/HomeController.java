@@ -1,8 +1,10 @@
 package com.dinesh.urlshortner.web.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.dinesh.urlshortner.domain.config.ApplicationProperties;
+import com.dinesh.urlshortner.domain.exceptions.ShortURLNotFoundException;
 import com.dinesh.urlshortner.domain.models.ShortUrlDto;
 import com.dinesh.urlshortner.web.dtos.CreateShortUrlCmd;
 import com.dinesh.urlshortner.web.dtos.CreateShortUrlForm;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.dinesh.urlshortner.domain.services.ShortUrlService;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -57,5 +60,14 @@ public class HomeController {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/s/{shortUrl}")
+    public String redirectToOriginalUrl(@PathVariable String shortUrl) {
+        Optional<ShortUrlDto> shortUrlDto = shortUrlService.findUrlByShortKey(shortUrl);
+        if (shortUrlDto.isEmpty()) {
+            throw new ShortURLNotFoundException(shortUrl);
+        }
+        return "redirect:" + shortUrlDto.get().originalUrl();
     }
 }

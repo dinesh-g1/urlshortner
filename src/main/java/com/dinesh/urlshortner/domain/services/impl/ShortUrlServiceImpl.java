@@ -2,10 +2,11 @@ package com.dinesh.urlshortner.domain.services.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Random;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.dinesh.urlshortner.domain.entities.ShortUrl;
+import com.dinesh.urlshortner.domain.exceptions.ShortURLNotFoundException;
 import com.dinesh.urlshortner.domain.models.ShortUrlDto;
 import com.dinesh.urlshortner.domain.services.EntityManager;
 import com.dinesh.urlshortner.web.dtos.CreateShortUrlCmd;
@@ -14,8 +15,10 @@ import org.springframework.stereotype.Service;
 
 import com.dinesh.urlshortner.domain.repository.ShortUrlRepository;
 import com.dinesh.urlshortner.domain.services.ShortUrlService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class ShortUrlServiceImpl implements ShortUrlService {
     private final ShortUrlRepository shortUrlRepository;
 
@@ -32,6 +35,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
     }
 
     @Override
+    @Transactional
     public ShortUrlDto createShortUrl(CreateShortUrlCmd createShortUrlCmd) {
         String shortKey = generateRandomShortKey();
 
@@ -48,12 +52,24 @@ public class ShortUrlServiceImpl implements ShortUrlService {
         return EntityManager.toShortUrlDto(shortUrl);
     }
 
+    @Override
+    @Transactional
+    public Optional<ShortUrlDto> findUrlByShortKey(String shortUrl) {
+        Optional<ShortUrl> originalUrl = shortUrlRepository.findShortUrlByShortUrl(shortUrl);
+        if (originalUrl.isEmpty()) {
+            throw new ShortURLNotFoundException(shortUrl);
+        }
+        originalUrl.get().setClickCount(originalUrl.get().getClickCount()+1);
+        shortUrlRepository.save(originalUrl.get());
+
+        return Optional.of(EntityManager.toShortUrlDto(originalUrl.get()));
+    }
+
     private String generateRandomShortKey() {
         int length = 6;
         boolean useLetters = true;
         boolean useNumbers = false;
-        String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);
 
-        return generatedString;
+        return RandomStringUtils.random(length, useLetters, useNumbers);
     }
 }

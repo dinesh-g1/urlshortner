@@ -14,7 +14,7 @@ public record ApplicationProperties(
                 @DefaultValue("http://localhost:8080")
         String baseUrl,
         @Min(1)
-                @Max(365)
-                @DefaultValue("30")
+        @Max(365)
+        @DefaultValue("30")
         int expiryInDays
 ) {}
